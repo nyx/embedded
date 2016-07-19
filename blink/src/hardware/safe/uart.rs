@@ -93,9 +93,12 @@ impl fmt::Write for Uart {
                 // Wait until transmitter is ready. See data sheet, sections
                 // 34.5.3.3 and 34.6.6.
                 while (*UART).status.read() & uart::TXRDY == 0 {}
-
                 // Send byte. See data sheet, sections 34.5.3.3 and 34.6.8.
-                (*UART).transmit_holding.write(b as u32);
+                //(*UART).transmit_holding.write(b_off as u32);
+                for a in 0..127u32 {
+                    while (*UART).status.read() & uart::TXRDY == 0 {}
+                    (*UART).transmit_holding.write(a as u32);
+                }
             }
         }
 

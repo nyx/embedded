@@ -24,7 +24,7 @@ pub fn start() {
     unsafe { debug::init(uart_tx) };
 
     loop {
-        println!("Start main loop iteration");
+        print!("0");
 
         restart_watchdog();
 

@@ -9,7 +9,9 @@
 # You need to set the path of the microcontroller's device file here. The
 # details depend on your system, but if you're on Linux, it should look
 # something like the following default.
-DEVICE=/dev/ttyACM0
+#DEVICE=/dev/ttyACM0
+
+DEVICE=/dev/cu.usbmodem1411
 
 # Please don't modify anything from here on, unless you know what you're doing.
 

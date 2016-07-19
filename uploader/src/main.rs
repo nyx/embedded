@@ -12,13 +12,13 @@ mod sam_ba;
 mod serial_port;
 mod utils;
 
-
 extern crate byteorder;
 extern crate serial;
 
 
 use std::env;
 use std::fs::File;
+use std::time::Duration;
 
 use byteorder::{
     LittleEndian,

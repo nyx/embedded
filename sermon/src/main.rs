@@ -14,7 +14,8 @@ use serial::prelude::*;
 
 
 fn main() {
-    let path = "/dev/ttyACM0";
+    //let path = "/dev/ttyACM0";
+    let path = "/dev/cu.usbmodem1411";
 
     let mut serial_port = open_port(path)
         .expect("Failed to open serial port");
@@ -22,11 +23,21 @@ fn main() {
     let input = start_input_reader();
 
     loop {
-        if let Err(error) = io::copy(&mut serial_port, &mut io::stdout()) {
+        let mut proxy: Vec<u8> = vec![];
+        if let Err(error) = io::copy(&mut serial_port, &mut proxy) {
             if error.kind() != io::ErrorKind::TimedOut {
-                panic!("Failed to print serial output: {}", error);
+                panic!("Failed to copy serial output into proxy: {}", error);
             }
         }
+        for b in &proxy {
+            print!("{} ", b);
+        }
+        // if let Err(error) = io::copy(&mut proxy, &mut io::stdout()) {
+        //     if error.kind() != io::ErrorKind::TimedOut {
+        //         panic!("Failed to print serial output: {}", error);
+        //     }
+        // }
+
         if let Err(error) = io::stdout().flush() {
             panic!("Failed to flush stdout: {}", error);
         }
